@@ -1,0 +1,130 @@
+---
+title: "Genetics QPadm"
+author: "Jonathan Ramani Krishnamachari"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+setwd("C:/Users/Jonat/Desktop/QPADM")
+```
+
+```{r}
+if (!requireNamespace("admixtools", quietly = TRUE)) {
+  devtools::install_github("uqrmaie1/admixtools")
+}
+library("admixtools")
+```
+
+
+```{r}
+#admixtools::run_shiny_admixtools()
+devtools::install_github("uqrmaie1/admixtools", dependencies = TRUE)
+```
+
+
+```{r}
+install.packages("Rcpp")
+install.packages("tidyverse")
+install.packages("igraph")
+install.packages("plotly")
+```
+
+```{r}
+library(Rcpp)
+library(tidyverse)
+library(igraph)
+library(plotly)
+```
+
+
+```{r}
+prefix = "C:/Users/Jonat/Desktop/QPADM/reich_data"
+my_f2_dir = "C:/Users/Jonat/Desktop/QPADM/fstats/fdir"
+library(admixtools)
+library(tidyverse)
+```
+
+
+prefix = "C:/Users/xyz/Desktop/fstats/ReichData/v50.0_1240K _public"
+my_f2_dir = "C:/Users/xyz/Desktop/fstats/fdir"
+library(admixtools)
+library(tidyverse)
+
+
+
+```{r}
+target = c('Albanian.DG')
+left= c('Croatia_LateC_EBA_Vucedol','Hungary_Avar_5_daughter.or.mother.AV1','Italy_IA_Republic_oEasternMediterranean.SG')
+
+
+right = c('Mbuti.DG', 'Ethiopia_4500BP_published.SG', 'Russia_Ust_Ishim.DG', 'Czech_Vestonice16', 'Belgium_UP_GoyetQ116_1_published', 'Russia_Kostenki14.SG', 'Russia_AfontovaGora3', 'Italy_North_Villabruna_HG', 'Han.DG', 'Papuan.DG', 'Karitiana.DG', 'Georgia_Satsurblia.SG', 'Iran_GanjDareh_N', 'Turkey_Epipaleolithic', 'Morocco_Iberomaurusian', 'Jordan_PPNB', 'Russia_HG_Karelia.SG', 'Russia_Samara_EBA_Yamnaya', 'Czech_Bohemia_CordedWare', 'Armenia_LBA.SG', 'ONG.SG')
+
+
+mypops = c('Mbuti.DG', 'Ethiopia_4500BP_published.SG', 'Russia_Ust_Ishim.DG', 'Czech_Vestonice16', 'Belgium_UP_GoyetQ116_1_published', 'Russia_Kostenki14.SG', 'Russia_AfontovaGora3', 'Italy_North_Villabruna_HG', 'Han.DG', 'Papuan.DG', 'Karitiana.DG', 'Georgia_Satsurblia.SG', 'Iran_GanjDareh_N', 'Turkey_Epipaleolithic', 'Morocco_Iberomaurusian', 'Jordan_PPNB', 'Russia_HG_Karelia.SG', 'Russia_Samara_EBA_Yamnaya', 'Czech_Bohemia_CordedWare', 'Armenia_LBA.SG', 'ONG.SG','Albanian.DG','Croatia_LateC_EBA_Vucedol', 'Hungary_Avar_5_daughter.or.mother.AV1', 'Italy_IA_Republic_oEasternMediterranean.SG')
+extract_f2(prefix, my_f2_dir, pops = mypops, overwrite = TRUE, maxmiss = 1)
+f2_blocks = f2_from_precomp(my_f2_dir, pops = mypops, afprod = TRUE)
+
+
+results = qpadm(prefix, left, right, target, allsnps = TRUE)
+results$weights
+results$popdrop 
+
+```
+
+\\
+
+## Now we run the populations 
+
+
+```{r}
+mypops = c('Mbuti.DG', 'Ethiopia_4500BP_published.SG', 'Russia_Ust_Ishim.DG', 'Czech_Vestonice16', 'Belgium_UP_GoyetQ116_1_published', 'Russia_Kostenki14.SG', 'Russia_AfontovaGora3', 'Italy_North_Villabruna_HG', 'Han.DG', 'Papuan.DG', 'Karitiana.DG', 'Georgia_Satsurblia.SG', 'Iran_GanjDareh_N', 'Turkey_Epipaleolithic', 'Morocco_Iberomaurusian', 'Jordan_PPNB', 'Russia_HG_Karelia.SG', 'Russia_Samara_EBA_Yamnaya', 'Czech_Bohemia_CordedWare', 'Armenia_LBA.SG', 'ONG.SG','Greek','Greek_Emporion','Polish.DG','Armenian.DG')
+extract_f2(prefix, my_f2_dir, pops = mypops, overwrite = TRUE, maxmiss = 1)
+f2_blocks = f2_from_precomp(my_f2_dir, pops = mypops, afprod = TRUE)
+```
+
+
+```{r}
+target = c('Greek')
+left= c('Greek_Emporion','Polish.DG','Armenian.DG')
+```
+
+
+```{r}
+right = c('Mbuti.DG', 'Ethiopia_4500BP_published.SG', 'Russia_Ust_Ishim.DG', 'Czech_Vestonice16', 'Belgium_UP_GoyetQ116_1_published', 'Russia_Kostenki14.SG', 'Russia_AfontovaGora3', 'Italy_North_Villabruna_HG', 'Han.DG', 'Papuan.DG', 'Karitiana.DG', 'Georgia_Satsurblia.SG', 'Iran_GanjDareh_N', 'Turkey_Epipaleolithic', 'Morocco_Iberomaurusian', 'Jordan_PPNB', 'Russia_HG_Karelia.SG', 'Russia_Samara_EBA_Yamnaya', 'Czech_Bohemia_CordedWare', 'Armenia_LBA.SG', 'ONG.SG')
+```
+
+
+
+
+```{r}
+results = qpadm(prefix, left, right, target, allsnps = TRUE)
+results$weights
+results$popdrop
+```
+
+
+
+
+
+```{r}
+prefix = "C:/Users/Jonat/Desktop/QPADM/reich_data"
+my_f2_dir = "C:/Users/Jonat/Desktop/QPADM/my_f2_dir_eupator"
+
+# Define populations
+target = c('Greek')
+left = c('Greek_Emporion','Polish.DG','Armenian.DG')
+right = c('Mbuti.DG', 'ONG.SG')
+mypops = c(right, 'Greek','Greek_Emporion','Polish.DG','Armenian.DG')
+
+# Extract F2 data
+extract_f2(prefix, my_f2_dir, pops = mypops, overwrite = TRUE, maxmiss = 1)
+f2_blocks = f2_from_precomp(my_f2_dir, pops = mypops, afprod = TRUE)
+
+# Run qpadm analysis
+results = qpadm(prefix, left, right, target, allsnps = TRUE)
+results$weights
+results$popdrop
+
+```
+
